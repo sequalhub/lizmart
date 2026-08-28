@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lizmart Clinic – Family Care</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+
+    <!-- Font Awesome 6 (free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+    <style>
+        /* ===== RESET & BASE ===== */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0a3d62;
+            --primary-light: #1a5a7a;
+            --secondary: #2ecc71;
+            --secondary-dark: #27ae60;
+            --accent: #f39c12;
+            --light-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-dark: #1e293b;
+            --text-muted: #475569;
+            --shadow: 0 20px 60px rgba(10, 61, 98, 0.12);
+            --shadow-hover: 0 30px 80px rgba(10, 61, 98, 0.20);
+            --radius: 20px;
+            --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--light-bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-block;
+            padding: 14px 36px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 8px 24px rgba(10, 61, 98, 0.25);
+        }
+        .btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(10, 61, 98, 0.35);
+            background: var(--primary-light);
+        }
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            box-shadow: none;
+        }
+        .btn-outline:hover {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 8px 24px rgba(10, 61, 98, 0.25);
+        }
+        .btn-secondary {
+            background: var(--secondary);
+            color: #fff;
+            box-shadow: 0 8px 24px rgba(46, 204, 113, 0.35);
+        }
+        .btn-secondary:hover {
+            background: var(--secondary-dark);
+            box-shadow: 0 16px 40px rgba(46, 204, 113, 0.45);
+        }
+        .btn-accent {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 8px 24px rgba(243, 156, 18, 0.35);
+        }
+        .btn-accent:hover {
+            background: #e67e22;
+            box-shadow: 0 16px 40px rgba(243, 156, 18, 0.45);
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 16px 0;
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: blur(18px) saturate(180%);
+            -webkit-backdrop-filter: blur(18px) saturate(180%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            transition: var(--transition);
+        }
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.92);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+        }
+        .navbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+        }
+        .logo i {
+            font-size: 2rem;
+            color: var(--secondary);
+        }
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            list-style: none;
+        }
+        .nav-links a {
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            transition: var(--transition);
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2.5px;
+            background: var(--secondary);
+            transition: var(--transition);
+            border-radius: 4px;
+        }
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-cta {
+            display: none;
+        }
+        .nav-cta .btn {
+            padding: 10px 24px;
+            font-size: 0.85rem;
+        }
+
+        /* Mobile hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 4px;
+            background: none;
+            border: none;
+        }
+        .hamburger span {
+            display: block;
+            width: 28px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            padding: 140px 0 80px;
+            background: linear-gradient(135deg, #f0f7fe 0%, #e6f0fa 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(46, 204, 113, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(10, 61, 98, 0.06) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content h1 {
+            font-size: 3.4rem;
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -1px;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+        .hero-content h1 span {
+            color: var(--secondary);
+        }
+        .hero-content p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 480px;
+            margin-bottom: 32px;
+        }
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 48px;
+            padding-top: 32px;
+            border-top: 2px solid rgba(10, 61, 98, 0.08);
+        }
+        .hero-stats div {
+            text-align: left;
+        }
+        .hero-stats .number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: block;
+            line-height: 1.2;
+        }
+        .hero-stats .label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .hero-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .hero-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 40px 36px;
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 420px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(4px);
+            transition: var(--transition);
+        }
+        .hero-card:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-4px);
+        }
+        .hero-card .card-badge {
+            display: inline-block;
+            background: var(--secondary);
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            padding: 4px 14px;
+            border-radius: 50px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        .hero-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+        .hero-card .clinic-sub {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+        .hero-card .info-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 10px 0;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.95rem;
+        }
+        .hero-card .info-row:last-child {
+            border-bottom: none;
+        }
+        .hero-card .info-row i {
+            width: 24px;
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+        .hero-card .info-row strong {
+            color: var(--primary);
+        }
+
+        /* floating decoration */
+        .float-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #fff;
+            padding: 10px 20px;
+            border-radius: 60px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--primary);
+            position: absolute;
+            animation: float 6s ease-in-out infinite;
+        }
+        .float-badge i {
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+        .float-badge-1 {
+            bottom: 20%;
+            right: 5%;
+        }
+        .float-badge-2 {
+            top: 15%;
+            left: 5%;
+            animation-delay: 2s;
+        }
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        /* ===== SECTION TITLES ===== */
+        .section-title {
+            text-align: center;
+            margin-bottom: 56px;
+        }
+        .section-title h2 {
+            font-size: 2.6rem;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+        }
+        .section-title h2 span {
+            color: var(--secondary);
+        }
+        .section-title p {
+            color: var(--text-muted);
+            max-width: 560px;
+            margin: 12px auto 0;
+            font-size: 1.05rem;
+        }
+
+        /* ===== SERVICES ===== */
+        .services {
+            padding: 80px 0;
+            background: var(--card-bg);
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 30px;
+        }
+        .service-card {
+            background: var(--light-bg);
+            padding: 36px 28px;
+            border-radius: var(--radius);
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+        .service-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--secondary);
+            box-shadow: var(--shadow);
+            background: #fff;
+        }
+        .service-card .icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(46, 204, 113, 0.12);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 18px;
+            font-size: 2rem;
+            color: var(--secondary);
+            transition: var(--transition);
+        }
+        .service-card:hover .icon {
+            background: var(--secondary);
+            color: #fff;
+            transform: scale(1.05);
+        }
+        .service-card h4 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+        .service-card p {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+        }
+
+        /* ===== ABOUT ===== */
+        .about {
+            padding: 80px 0;
+            background: var(--light-bg);
+        }
+        .about .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        .about-image {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: var(--radius);
+            padding: 48px 36px;
+            color: #fff;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .about-image::after {
+            content: '❤️';
+            position: absolute;
+            font-size: 12rem;
+            opacity: 0.06;
+            bottom: -20px;
+            right: -10px;
+            transform: rotate(10deg);
+        }
+        .about-image h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            position: relative;
+            z-index: 2;
+        }
+        .about-image p {
+            opacity: 0.9;
+            font-size: 1rem;
+            max-width: 90%;
+            position: relative;
+            z-index: 2;
+        }
+        .about-image .feature-list {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            position: relative;
+            z-index: 2;
+        }
+        .about-image .feature-list span {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+        }
+        .about-image .feature-list i {
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+
+        .about-text h2 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+            margin-bottom: 16px;
+        }
+        .about-text h2 span {
+            color: var(--secondary);
+        }
+        .about-text p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-size: 1.02rem;
+        }
+
+        /* ===== REGISTRATION CARD (interactive) ===== */
+        .registration {
+            padding: 80px 0;
+            background: var(--card-bg);
+        }
+        .registration-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: start;
+        }
+
+        .reg-card {
+            background: var(--primary);
+            border-radius: var(--radius);
+            padding: 40px 36px;
+            color: #fff;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        .reg-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -30%;
+            width: 400px;
+            height: 400px;
+            background: rgba(46, 204, 113, 0.08);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .reg-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+        .reg-card .badge {
+            display: inline-block;
+            background: var(--secondary);
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            padding: 4px 16px;
+            border-radius: 50px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        .reg-card h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            letter-spacing: -0.3px;
+        }
+        .reg-card .reg-sub {
+            opacity: 0.8;
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+        }
+        .reg-card .reg-detail {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.95rem;
+        }
+        .reg-card .reg-detail:last-child {
+            border-bottom: none;
+        }
+        .reg-card .reg-detail i {
+            width: 24px;
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+        .reg-card .reg-detail strong {
+            font-weight: 600;
+        }
+
+        /* Registration form */
+        .reg-form {
+            background: var(--light-bg);
+            padding: 40px 36px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        .reg-form h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 6px;
+        }
+        .reg-form .form-sub {
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            font-size: 0.95rem;
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            background: #fff;
+            color: var(--text-dark);
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.15);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .reg-form .btn {
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        /* ===== CONTACT ===== */
+        .contact {
+            padding: 80px 0;
+            background: var(--light-bg);
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        .contact-info .info-item {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            background: #fff;
+            padding: 20px 24px;
+            border-radius: 16px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+        .contact-info .info-item:hover {
+            border-color: var(--secondary);
+            transform: translateX(6px);
+        }
+        .contact-info .info-item i {
+            width: 48px;
+            height: 48px;
+            background: rgba(46, 204, 113, 0.12);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: var(--secondary);
+            flex-shrink: 0;
+        }
+        .contact-info .info-item div strong {
+            display: block;
+            color: var(--primary);
+            font-weight: 700;
+        }
+        .contact-info .info-item div span {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .contact-map {
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            height: 100%;
+            min-height: 320px;
+            background: #e2e8f0;
+            position: relative;
+        }
+        .contact-map iframe {
+            width: 100%;
+            height: 100%;
+            min-height: 320px;
+            border: 0;
+            display: block;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--primary);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 48px 0 24px;
+        }
+        footer .container {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+        footer .footer-top {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+        }
+        footer .footer-brand .logo {
+            color: #fff;
+            margin-bottom: 12px;
+        }
+        footer .footer-brand .logo span {
+            color: var(--secondary);
+        }
+        footer .footer-brand p {
+            max-width: 320px;
+            font-size: 0.95rem;
+            opacity: 0.8;
+        }
+        footer .footer-links h5 {
+            color: #fff;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 16px;
+        }
+        footer .footer-links ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        footer .footer-links a {
+            opacity: 0.8;
+            transition: var(--transition);
+            font-size: 0.92rem;
+        }
+        footer .footer-links a:hover {
+            opacity: 1;
+            color: var(--secondary);
+        }
+        footer .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            opacity: 0.7;
+        }
+        footer .footer-bottom .socials {
+            display: flex;
+            gap: 16px;
+        }
+        footer .footer-bottom .socials a {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            color: #fff;
+        }
+        footer .footer-bottom .socials a:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .hero .container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .hero-content p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .hero-buttons {
+                justify-content: center;
+            }
+            .hero-stats {
+                justify-content: center;
+            }
+            .hero-card {
+                max-width: 100%;
+            }
+            .about .container {
+                grid-template-columns: 1fr;
+            }
+            .registration-wrapper {
+                grid-template-columns: 1fr;
+            }
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            footer .footer-top {
+                grid-template-columns: 1fr 1fr;
+            }
+            .float-badge {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(255, 255, 255, 0.96);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                justify-content: center;
+                gap: 28px;
+                transform: translateX(100%);
+                transition: var(--transition);
+                padding: 40px;
+                z-index: 999;
+            }
+            .nav-links.open {
+                transform: translateX(0);
+            }
+            .nav-links a {
+                font-size: 1.4rem;
+            }
+            .hamburger {
+                display: flex;
+                z-index: 1001;
+            }
+            .nav-cta {
+                display: block;
+            }
+
+            .hero {
+                padding: 120px 0 60px;
+            }
+            .hero-content h1 {
+                font-size: 2.4rem;
+            }
+            .hero-stats {
+                flex-wrap: wrap;
+                gap: 24px;
+            }
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            footer .footer-top {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            footer .footer-bottom {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 1.9rem;
+            }
+            .hero-card {
+                padding: 28px 20px;
+            }
+            .reg-card,
+            .reg-form {
+                padding: 28px 20px;
+            }
+            .btn {
+                padding: 12px 24px;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* ===== ANIMATIONS ON SCROLL (simple reveal) ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="#" class="logo">
+                <i class="fas fa-heartbeat"></i>
+                Lizmart<span>Clinic</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#hero" class="active">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#registration">Register</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li class="nav-cta"><a href="#registration" class="btn btn-secondary" style="padding:10px 24px;font-size:0.85rem;">Book Now</a></li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Your Family's <span>Health</span> Starts Here</h1>
+                <p>Compassionate, expert care for every member of your family. At Lizmart Clinic, we put your wellbeing first.</p>
+                <div class="hero-buttons">
+                    <a href="#registration" class="btn btn-secondary"><i class="fas fa-calendar-check"></i> Register Now</a>
+                    <a href="#services" class="btn btn-outline">Our Services</a>
+                </div>
+                <div class="hero-stats">
+                    <div><span class="number" data-count="15">0</span><span class="label">+ Years of Care</span></div>
+                    <div><span class="number" data-count="5000">0</span><span class="label">+ Patients Treated</span></div>
+                    <div><span class="number" data-count="24">0</span><span class="label">/ 7 Availability</span></div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="hero-card">
+                    <span class="card-badge"><i class="fas fa-id-card"></i> Family Card</span>
+                    <h3>Lizmart Clinic</h3>
+                    <div class="clinic-sub">Patient's Registration Card</div>
+                    <div class="info-row"><i class="fas fa-map-pin"></i> <span><strong>29 Oreije-Ogbe Street</strong>, Off Jakpa Road, By Small Market, Effurun</span></div>
+                    <div class="info-row"><i class="fas fa-phone-alt"></i> <span><strong>08023084928</strong></span></div>
+                    <div class="info-row"><i class="fas fa-clock"></i> <span>Mon – Sat: 8:00 AM – 6:00 PM</span></div>
+                </div>
+            </div>
+        </div>
+        <!-- floating badges -->
+        <div class="float-badge float-badge-1"><i class="fas fa-check-circle"></i> Trusted Family Care</div>
+        <div class="float-badge float-badge-2"><i class="fas fa-stethoscope"></i> Expert Doctors</div>
+    </section>
+
+    <!-- ===== ABOUT ===== -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-image">
+                <h3>❤️ Your Health, Our Mission</h3>
+                <p>We provide comprehensive, compassionate healthcare services tailored to every generation of your family.</p>
+                <div class="feature-list">
+                    <span><i class="fas fa-user-md"></i> Qualified &amp; Caring Staff</span>
+                    <span><i class="fas fa-hospital-alt"></i> Modern Facilities</span>
+                    <span><i class="fas fa-heart"></i> Patient-Centered Approach</span>
+                </div>
+            </div>
+            <div class="about-text">
+                <h2>About <span>Lizmart Clinic</span></h2>
+                <p>Founded with a vision to bring accessible, high-quality healthcare to the Effurun community, Lizmart Clinic has grown into a trusted name in family medicine. Our team of dedicated professionals is committed to providing personalized care in a warm, welcoming environment.</p>
+                <p>From routine checkups to specialized treatments, we combine medical expertise with genuine compassion — because we believe every patient deserves to feel heard and valued.</p>
+                <a href="#registration" class="btn btn-secondary"><i class="fas fa-user-plus"></i> Become a Patient</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SERVICES ===== -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>Our <span>Services</span></h2>
+                <p>Comprehensive care designed around your family's needs — from prevention to recovery.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card reveal">
+                    <div class="icon"><i class="fas fa-stethoscope"></i></div>
+                    <h4>General Consultation</h4>
+                    <p>Expert diagnosis and treatment for a wide range of health concerns, with a focus on preventive care.</p>
+                </div>
+                <div class="service-card reveal">
+                    <div class="icon"><i class="fas fa-child"></i></div>
+                    <h4>Pediatric Care</h4>
+                    <p>Specialized healthcare for children, from infancy through adolescence, in a kid-friendly environment.</p>
+                </div>
+                <div class="service-card reveal">
+                    <div class="icon"><i class="fas fa-female"></i></div>
+                    <h4>Women's Health</h4>
+                    <p>Comprehensive gynecological and wellness services tailored to women at every life stage.</p>
+                </div>
+                <div class="service-card reveal">
+                    <div class="icon"><i class="fas fa-heartbeat"></i></div>
+                    <h4>Chronic Care</h4>
+                    <p>Ongoing management of conditions like diabetes, hypertension, and more, with personalized plans.</p>
+                </div>
+                <div class="service-card reveal">
+                    <div class="icon"><i class="fas fa-syringe"></i></div>
+                    <h4>Vaccinations</h4>
+                    <p>Immunization services for children and adults, keeping your family protected against preventable diseases.</p>
+                </div>
+                <div class="service-card reveal">
+                    <div class="icon"><i class="fas fa-ambulance"></i></div>
+                    <h4>Emergency Care</h4>
+                    <p>Prompt, professional response for urgent medical needs, available during clinic hours.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== REGISTRATION ===== -->
+    <section class="registration" id="registration">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>Patient <span>Registration</span></h2>
+                <p>Complete your family registration card online. We're here to make your first visit seamless.</p>
+            </div>
+            <div class="registration-wrapper">
+                <!-- Left: Registration Card Display -->
+                <div class="reg-card reveal">
+                    <span class="badge"><i class="fas fa-id-card"></i> Family Card</span>
+                    <h3>Lizmart Clinic</h3>
+                    <div class="reg-sub">Patient's Registration Card</div>
+                    <div class="reg-detail"><i class="fas fa-map-pin"></i> <span><strong>29 Oreije-Ogbe Street</strong>, Off Jakpa Road, By Small Market, Effurun</span></div>
+                    <div class="reg-detail"><i class="fas fa-phone-alt"></i> <span><strong>08023084928</strong></span></div>
+                    <div class="reg-detail"><i class="fas fa-clock"></i> <span>Mon – Sat: 8:00 AM – 6:00 PM</span></div>
+                    <div class="reg-detail"><i class="fas fa-envelope"></i> <span>info@lizmartclinic.com</span></div>
+                    <div style="margin-top:24px;font-size:0.85rem;opacity:0.6;border-top:1px solid rgba(255,255,255,0.08);padding-top:16px;">
+                        <i class="fas fa-shield-alt"></i> Your data is secure &amp; confidential
+                    </div>
+                </div>
+
+                <!-- Right: Registration Form -->
+                <div class="reg-form reveal">
+                    <h3>Register <span style="color:var(--secondary);">Now</span></h3>
+                    <div class="form-sub">Fill in the details below to register as a new patient.</div>
+                    <form id="registrationForm" onsubmit="return handleSubmit(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="fullName">Full Name *</label>
+                                <input type="text" id="fullName" placeholder="e.g. John Doe" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="dob">Date of Birth *</label>
+                                <input type="date" id="dob" required />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" placeholder="john@example.com" />
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone Number *</label>
+                                <input type="tel" id="phone" placeholder="08023084928" required />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Residential Address</label>
+                            <input type="text" id="address" placeholder="Enter your full address" />
+                        </div>
+                        <div class="form-group">
+                            <label for="reason">Reason for Visit</label>
+                            <textarea id="reason" placeholder="Tell us how we can help you..." rows="2"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-secondary">
+                            <i class="fas fa-paper-plane"></i> Submit Registration
+                        </button>
+                    </form>
+                    <div id="formFeedback" style="margin-top:16px;font-weight:600;font-size:0.95rem;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>Get in <span>Touch</span></h2>
+                <p>We're here to answer your questions and schedule your visit.</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info reveal">
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div><strong>Visit Us</strong><span>29 Oreije-Ogbe Street, Off Jakpa Road, By Small Market, Effurun</span></div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <div><strong>Call Us</strong><span>08023084928</span></div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <div><strong>Email Us</strong><span>info@lizmartclinic.com</span></div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <div><strong>Working Hours</strong><span>Mon – Sat: 8:00 AM – 6:00 PM</span></div>
+                    </div>
+                </div>
+                <div class="contact-map reveal">
+                    <!-- Google Maps embed for Effurun / Jakpa Road area (approximate) -->
+                    <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63463.00350720248!2d5.669159585378091!3d5.558017672387296!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1041a1039c89bcf5%3A0x7f5f83fe956a0801!2sEffurun!5e0!3m2!1sen!2sng!4v1690000000000!5m2!1sen!2sng"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    title="Lizmart Clinic Location">
+                </iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+    <div class="container">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <a href="#" class="logo">
+                    <i class="fas fa-heartbeat"></i>
+                    Lizmart<span>Clinic</span>
+                </a>
+                <p>Compassionate, expert family care at the heart of Effurun. Your health is our legacy.</p>
+            </div>
+            <div class="footer-links">
+                <h5>Quick Links</h5>
+                <ul>
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#registration">Register</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h5>Contact</h5>
+                <ul>
+                    <li><a href="tel:08023084928"><i class="fas fa-phone"></i> 08023084928</a></li>
+                    <li><a href="#"><i class="fas fa-map-pin"></i> 29 Oreije-Ogbe St, Effurun</a></li>
+                    <li><a href="#"><i class="fas fa-envelope"></i> info@lizmartclinic.com</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 Lizmart Clinic. All rights reserved.</span>
+            <div class="socials">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+    // ---- Mobile Menu ----
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navLinks.classList.toggle('open');
+    });
+
+    // Close menu on link click (mobile)
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navLinks.classList.remove('open');
+        });
+    });
+
+    // ---- Navbar scroll effect ----
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 60) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+
+    // ---- Active nav link on scroll ----
+    const sections = document.querySelectorAll('section[id]');
+    window.addEventListener('scroll', () => {
+        let current = 'hero';
+        sections.forEach(section => {
+            const top = section.offsetTop - 120;
+            if (window.scrollY >= top) {
+                current = section.getAttribute('id');
+            }
+        });
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + current) {
+                link.classList.add('active');
+            }
+        });
+    });
+
+    // ---- Counter animation ----
+    const counters = document.querySelectorAll('.number');
+    let countersAnimated = false;
+
+    function animateCounters() {
+        counters.forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-count'));
+            let current = 0;
+            const increment = Math.ceil(target / 60);
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    counter.textContent = target + '+';
+                    clearInterval(timer);
+                } else {
+                    counter.textContent = current;
+                }
+            }, 25);
+        });
+    }
+
+    // ---- Reveal on scroll ----
+    const reveals = document.querySelectorAll('.reveal');
+
+    function checkReveal() {
+        const windowHeight = window.innerHeight;
+        reveals.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            if (rect.top < windowHeight - 80) {
+                el.classList.add('visible');
+            }
+        });
+        // Also trigger counters when hero stats become visible
+        const stats = document.querySelector('.hero-stats');
+        if (stats && !countersAnimated) {
+            const rect = stats.getBoundingClientRect();
+            if (rect.top < window.innerHeight - 60) {
+                countersAnimated = true;
+                animateCounters();
+            }
+        }
+    }
+
+    window.addEventListener('scroll', checkReveal);
+    window.addEventListener('load', () => {
+        checkReveal();
+        // If hero stats already visible on load
+        const stats = document.querySelector('.hero-stats');
+        if (stats) {
+            const rect = stats.getBoundingClientRect();
+            if (rect.top < window.innerHeight - 60) {
+                countersAnimated = true;
+                animateCounters();
+            }
+        }
+        // Manually trigger for any visible reveals
+        reveals.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight - 80) {
+                el.classList.add('visible');
+            }
+        });
+    });
+
+    // ---- Form submission ----
+    function handleSubmit(e) {
+        e.preventDefault();
+        const form = document.getElementById('registrationForm');
+        const feedback = document.getElementById('formFeedback');
+
+        // Simple validation check
+        const name = document.getElementById('fullName').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const dob = document.getElementById('dob').value;
+
+        if (!name || !phone || !dob) {
+            feedback.innerHTML = '<span style="color:#e74c3c;"><i class="fas fa-exclamation-circle"></i> Please fill in all required fields.</span>';
+            return false;
+        }
+
+        // Simulate submission
+        feedback.innerHTML = '<span style="color:var(--secondary);"><i class="fas fa-spinner fa-spin"></i> Submitting...</span>';
+        setTimeout(() => {
+            feedback.innerHTML = '<span style="color:var(--secondary);"><i class="fas fa-check-circle"></i> Registration successful! We\'ll contact you shortly.</span>';
+            form.reset();
+        }, 1500);
+
+        return false;
+    }
+
+    // ---- Smooth anchor scroll (optional, but browsers handle it) ----
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href === '#') return;
+            const target = document.querySelector(href);
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
